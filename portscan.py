@@ -2,6 +2,12 @@ import socket
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 
+def get_service(port):
+    try:
+        return socket.getservbyport(port, "tcp")
+    except OSError:
+        return "unknown"
+
 def scan_port(host, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(1)
@@ -13,7 +19,7 @@ def scan_port(host, port):
     except Exception:
         banner = ""
     s.close()
-    return port, banner
+    return port, get_service(port), banner
 
 parser = argparse.ArgumentParser(description="Simple port scanner")
 parser.add_argument("host")
@@ -27,4 +33,4 @@ with ThreadPoolExecutor(max_workers=20) as pool:
                        range(args.start, args.end + 1))
     for r in results:
         if r:
-            print(f"Port {r[0]}: open  {r[1]}")
+            print(f"Port {r[0]} ({r[1]}): open  {r[2]}")

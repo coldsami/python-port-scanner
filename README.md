@@ -6,6 +6,7 @@ A multithreaded TCP port scanner with banner grabbing, written in Python using o
 - Scans a range of TCP ports on a target host
 - Uses 20 threads for faster scans
 - Grabs service banners to identify software and versions
+- Identifies services by port number
 - Command-line options for target and port range
 
 ## Usage
@@ -21,9 +22,9 @@ python3 portscan.py 192.168.131.148 -s 1 -e 1024
 ## Example output
 Scan of a Metasploitable2 VM in my home lab:
 ```
-Port 21: open  220 (vsFTPd 2.3.4)
-Port 22: open  SSH-2.0-OpenSSH_4.7p1 Debian-8ubuntu1
-Port 25: open  220 metasploitable.localdomain ESMTP Postfix (Ubuntu)
+Port 21 (ftp): open  220 (vsFTPd 2.3.4)
+Port 22 (ssh): open  SSH-2.0-OpenSSH_4.7p1 Debian-8ubuntu1
+Port 25 (smtp): open  220 metasploitable.localdomain ESMTP Postfix (Ubuntu)
 ```
 
 ## What I learned
@@ -39,5 +40,5 @@ For educational use and authorized testing only. Only scan systems you own or ha
 
 ## Future improvements
 - Save results to a file
-- Add service name detection
 - Add UDP scanning
+
